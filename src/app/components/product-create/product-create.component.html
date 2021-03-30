@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <form (ngSubmit)="onCreateProduct()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        placeholder="Name"
+        [(ngModel)]="product.name"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input
+        type="text"
+        name="category"
+        placeholder="category"
+        class="form-control"
+        [(ngModel)]="product.category"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Description</label>
+      <input
+        type="text"
+        name="contact"
+        placeholder="Description"
+        class="form-control"
+        [(ngModel)]="product.description"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>

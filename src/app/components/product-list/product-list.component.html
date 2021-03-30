@@ -1,0 +1,37 @@
+<h4>Products</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Sr.No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products; let index = index">
+      <th scope="row">{{ index + 1 }}</th>
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.description }}</td>
+      <td>
+        <a
+          [routerLink]="['/edit', product.id]"
+          class="btn btn-success btn-sm m-1"
+          >Edit</a
+        >
+        <a
+          class="btn btn-danger btn-sm ml-1"
+          (click)="onDeleteProduct(product.id)"
+          >Delete</a
+        >
+        <a
+          [routerLink]="['/products', product.id]"
+          class="btn btn-primary btn-sm ml-1"
+          >View</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>

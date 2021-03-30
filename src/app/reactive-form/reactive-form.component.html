@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <h2>Bootcamp Enrollment form 2021</h2>
+  <div>
+    {{ profileForm.value | json }}
+    <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          class="form-control"
+          required
+          formControlName="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="name">Email</label>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          class="form-control"
+          required
+          formControlName="email"
+        />
+      </div>
+      <button class="btn btn-primary" [disabled]="!profileForm.valid">
+        Save
+      </button>
+    </form>
+  </div>
+</div>
