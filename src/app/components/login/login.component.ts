@@ -12,7 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  error: string;
+  loginFailed: boolean;
+  loginFailedMessage: string;
   constructor(
     private formBuilder: FormBuilder,
     private authServive: AuthService,
@@ -30,7 +31,6 @@ export class LoginComponent implements OnInit {
   }
   login() {
     this.submitted = true;
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
@@ -38,16 +38,16 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value,
     };
-    //console.log(credentials);
     this.authServive
       .login(credentials.email, credentials.password)
       .subscribe((response) => {
         if (response.success) {
-          //console.log(response.data);
+          this.loginFailed = false;
           localStorage.setItem('token', response.data.token);
           this.router.navigate(['/products']);
         } else {
-          this.error = 'Login failed';
+          this.loginFailed = true;
+          this.loginFailedMessage = 'Login failed, please try again';
         }
       });
   }

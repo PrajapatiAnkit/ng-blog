@@ -16,7 +16,7 @@ export class LogoutComponent implements OnInit {
   ) {
     this.authService.logout().subscribe((response) => {
       console.log(response);
-      this.router.navigate(['/login']);
+      this.router.navigate(['']);
     });
   }
 

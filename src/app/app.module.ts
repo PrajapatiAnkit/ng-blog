@@ -10,11 +10,17 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductEditComponent } from './components/product-edit/product-edit.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { PostComponent } from './components/post/post.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { ProcessingComponent } from './components/helper/processing/processing.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CreatePostComponent } from './components/post/create-post/create-post.component';
+import { AlertComponent } from './components/helper/alert/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +35,11 @@ import { PostComponent } from './components/post/post.component';
     LoginComponent,
     LogoutComponent,
     PostComponent,
+    DashboardComponent,
+    ProcessingComponent,
+    PageNotFoundComponent,
+    CreatePostComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +48,13 @@ import { PostComponent } from './components/post/post.component';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

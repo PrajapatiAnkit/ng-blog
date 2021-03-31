@@ -9,16 +9,18 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PostComponent } from './components/post/post.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CreatePostComponent } from './components/post/create-post/create-post.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'home', component: AppComponent, canActivate: [AuthGuard] },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'products',
     component: ProductListComponent,
@@ -43,6 +45,15 @@ const routes: Routes = [
     path: 'posts',
     component: PostComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'create-post',
+    component: CreatePostComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 

@@ -1,7 +1,22 @@
 <div class="d-flex justify-content-center m-5">
   <div class="card" style="width: 25rem">
     <div class="card-body">
-      {{ error }}
+      <div
+        class="alert alert-warning alert-dismissible fade show login-failed"
+        role="alert"
+        *ngIf="loginFailed"
+      >
+        <strong>Oops!</strong> {{ loginFailedMessage }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="form-group">
           <label htmlFor="email">Email</label>
