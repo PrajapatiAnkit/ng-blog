@@ -12,7 +12,7 @@ export class PostService {
    * @returns json
    */
   getAllPosts(): Observable<any> {
-    return this.http.get('/api/posts/list');
+    return this.http.get('/api/posts');
   }
   /**
    * This function creates or updates the post

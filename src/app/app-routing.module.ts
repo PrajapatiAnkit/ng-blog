@@ -12,6 +12,7 @@ import { PostComponent } from './components/post/post.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
+import { PostDetailComponent } from './components/post/post-detail/post-detail.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -44,6 +45,11 @@ const routes: Routes = [
   {
     path: 'posts',
     component: PostComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'post-detail/:id',
+    component: PostDetailComponent,
     canActivate: [AuthGuard],
   },
   {

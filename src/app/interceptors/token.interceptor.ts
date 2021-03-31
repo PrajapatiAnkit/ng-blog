@@ -5,10 +5,10 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import {catchError} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -29,12 +29,17 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(catchError(error => this.handleAuthError(error)));
+    return next
+      .handle(request)
+      .pipe(catchError((error) => this.handleAuthError(error)));
   }
-  private handleAuthError(err): Observable<any>{
+  private handleAuthError(err): Observable<any> {
+    console.log(err);
+
     // handle your auth error or rethrow
     if (err.status === 401 || err.status === 403) {
       // navigate /delete cookies or whatever
+      this.authService.removeToken();
       this.router.navigateByUrl(``);
     }
     return throwError(err);

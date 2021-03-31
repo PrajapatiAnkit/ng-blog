@@ -29,7 +29,7 @@ export class AuthService {
    * @returns json
    */
   login(email: string, password: string): Observable<any> {
-    return this.http.post('/api/login', { email, password }).pipe(
+    return this.http.post('/api/auth/login', { email, password }).pipe(
       map((response: any) => {
         if (response.success) {
           const user = response.data;
@@ -58,13 +58,21 @@ export class AuthService {
       ? this.logggedInUserSubject.value.token
       : '';
   }
+  /**
+   * This function clears the Token when required
+   */
+  public removeToken(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    this.logggedInUserSubject.next(null);
+  }
 
   /**
    * This function logouts the user from service side
    * @returns json
    */
   logout(): Observable<any> {
-    return this.http.get('/api/user/logout').pipe(
+    return this.http.get('/api/auth/logout').pipe(
       map((response) => {
         localStorage.removeItem('token');
         localStorage.removeItem('currentUser');

@@ -21,6 +21,7 @@ import { ProcessingComponent } from './components/helper/processing/processing.c
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
 import { AlertComponent } from './components/helper/alert/alert/alert.component';
+import { PostDetailComponent } from './components/post/post-detail/post-detail.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AlertComponent } from './components/helper/alert/alert/alert.component'
     PageNotFoundComponent,
     CreatePostComponent,
     AlertComponent,
+    PostDetailComponent,
   ],
   imports: [
     BrowserModule,

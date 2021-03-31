@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         if (response.success) {
           this.loginFailed = false;
           localStorage.setItem('token', response.data.token);
-          this.router.navigate(['/products']);
+          this.router.navigate(['/posts']);
         } else {
           this.loginFailed = true;
           this.loginFailedMessage = 'Login failed, please try again';
