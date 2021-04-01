@@ -22,6 +22,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
 import { AlertComponent } from './components/helper/alert/alert/alert.component';
 import { PostDetailComponent } from './components/post/post-detail/post-detail.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CounterBoxComponent } from './components/helper/counter-box/counter-box.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { PostDetailComponent } from './components/post/post-detail/post-detail.c
     CreatePostComponent,
     AlertComponent,
     PostDetailComponent,
+    ProfileComponent,
+    CounterBoxComponent,
   ],
   imports: [
     BrowserModule,

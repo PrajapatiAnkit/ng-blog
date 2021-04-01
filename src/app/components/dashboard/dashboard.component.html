@@ -1,1 +1,17 @@
-<p>dashboard works!</p>
+<h4>Welcome User</h4>
+<div class="row">
+  <div class="col-sm-3">
+    <app-counter-box
+      [boxTitle]="'Total Posts'"
+      [boxCounter]="'0'"
+      [actionMsg]="'View Posts'"
+    ></app-counter-box>
+  </div>
+  <div class="col-sm-3">
+    <app-counter-box
+      [boxTitle]="'Total Users'"
+      [boxCounter]="'0'"
+      [actionMsg]="'View Users'"
+    ></app-counter-box>
+  </div>
+</div>

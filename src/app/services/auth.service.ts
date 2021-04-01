@@ -81,4 +81,11 @@ export class AuthService {
       })
     );
   }
+  /**
+   * This is a helper function to set the user data to local storage
+   * @param user
+   */
+  setCurrentUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
 }

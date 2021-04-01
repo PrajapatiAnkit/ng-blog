@@ -1,1 +1,36 @@
-<p>post-detail works! {{ postId }}</p>
+<app-processing *ngIf="loading; else post_detail"></app-processing>
+<ng-template #post_detail>
+  <div class="card">
+    <div class="card-header bg-white">
+      <div class="card-actions float-left mr-3">
+        <a
+          routerLink="/posts"
+          title="Back"
+          class="btn btn-sm btn-primary btn-circle"
+        >
+          <i class="las la-arrow-left"></i>
+        </a>
+      </div>
+      <h5 class="card-title mb-0">{{ post.title }}</h5>
+    </div>
+    <div class="card-body pt-0">
+      <p class="text-muted mt-2">
+        {{ post.content }}
+      </p>
+
+      <div
+        class="badge badge-success my-2 p-2 mr-1"
+        *ngFor="let tag of postTags"
+      >
+        {{ tag }}
+      </div>
+      <div>
+        <img
+          src="https://appstack.bootlab.io/img/photos/unsplash-1.jpg"
+          class="img-responsive mr-2"
+          width="400"
+        />
+      </div>
+    </div>
+  </div>
+</ng-template>

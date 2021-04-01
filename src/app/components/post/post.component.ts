@@ -9,7 +9,7 @@ import { PostService } from 'src/app/services/post/post.service';
 })
 export class PostComponent implements OnInit {
   posts: Post[] = [];
-  loaded: boolean = false;
+  loading: boolean = true;
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class PostComponent implements OnInit {
   getAllPosts() {
     this.postService.getAllPosts().subscribe((response) => {
       this.posts = response.data;
-      this.loaded = true;
+      this.loading = false;
     });
   }
 }

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" routerLink="/">CRUD</a>
+  <a class="navbar-brand" routerLink="/">ng-Blog</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -33,7 +33,12 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link">Welcome {{ currentUserName }}</a>
+        <a routerLink="/profile" class="nav-link" *ngIf="isLoggedIn"
+          >Welcome {{ currentUserName }}</a
+        >
+        <a class="nav-link" *ngIf="!isLoggedIn"
+          >Welcome {{ currentUserName }}</a
+        >
       </li>
       <li class="nav-item" *ngIf="!isLoggedIn">
         <a routerLink="/" class="nav-link">Login</a>

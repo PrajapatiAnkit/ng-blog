@@ -1,44 +1,50 @@
-<app-processing *ngIf="!loaded"></app-processing>
-
-<div class="my-3 p-3 bg-white rounded shadow-sm" *ngIf="loaded">
-  <div class="float-right">
-    <a routerLink="/create-post" class="btn btn-lg btn-primary btn-circle">
-      <i class="las la-plus"></i>
-    </a>
-  </div>
-
-  <div class="mt-5">
-    <h6 class="border-bottom border-gray pb-2 mb-0">Recent posts</h6>
-    <div class="media text-muted pt-3" *ngFor="let post of posts">
-      <svg
-        class="bd-placeholder-img mr-2 rounded"
-        width="32"
-        height="32"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="Placeholder: 32x32"
-        preserveAspectRatio="xMidYMid slice"
-        focusable="false"
-      >
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#e83e8c" />
-        <text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text>
-      </svg>
-
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <a [routerLink]="['/post-detail', post.id]">
-          <strong class="d-block text-gray-dark">{{ post.title }}</strong>
-        </a>
-        {{ post.content }}
-
-        <strong class="d-block text-gray-dark"
-          >By @{{ post.author }} on {{ post.created_at }}</strong
+<app-processing *ngIf="loading; else post_list"></app-processing>
+<ng-template #post_list>
+  <div class="card">
+    <div class="card-header bg-white">
+      <div class="card-actions float-right mr-3">
+        <a
+          routerLink="/create-post"
+          title="Back"
+          class="btn btn-sm btn-primary btn-circle"
         >
-      </p>
+          <i class="las la-plus"></i>
+        </a>
+      </div>
+      <h6 class="card-title border-gray pb-2 mb-0">Recent posts</h6>
+    </div>
+    <div class="card-body pt-0">
+      <div class="mt-5">
+        <div class="media text-muted" *ngFor="let post of posts">
+          <svg
+            class="bd-placeholder-img mr-2 rounded"
+            width="32"
+            height="32"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#e83e8c" />
+            <text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text>
+          </svg>
+
+          <p
+            class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+          >
+            <a [routerLink]="['/post-detail', post.id]">
+              <strong class="d-block text-gray-dark">{{ post.title }}</strong>
+            </a>
+            {{ post.content }}
+
+            <strong class="d-block text-gray-dark"
+              >By @{{ post.author }} on {{ post.created_at }}</strong
+            >
+          </p>
+        </div>
+      </div>
     </div>
   </div>
-
-  <small class="d-block text-right mt-3">
-    <a href="#">All updates</a>
-  </small>
-</div>
+</ng-template>

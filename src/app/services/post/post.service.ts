@@ -22,4 +22,11 @@ export class PostService {
   savePost(post: any): Observable<any> {
     return this.http.post('/api/posts/save', post);
   }
+  /**
+   * This function gives the single post detail
+   * @returns json
+   */
+  getPostDetail(postId: string): Observable<any> {
+    return this.http.get('/api/posts/detail/' + postId);
+  }
 }
