@@ -12,6 +12,8 @@ export class ProfileComponent implements OnInit {
   submitted: boolean = false;
   profileForm: FormGroup;
   profileUpdateMsg: string = '';
+  editPassword: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -27,20 +29,32 @@ export class ProfileComponent implements OnInit {
       email: ['', Validators.required],
       contact: ['', Validators.required],
       password: ['', Validators.required],
-      passwordCheck: [false, Validators.required],
     });
+    this.profileForm.get('password').disable();
     this.getProfile();
   }
   get profile() {
     return this.profileForm.controls;
   }
+
+  onPassCheckChange(params) {
+    this.editPassword = !this.editPassword;
+    this.submitted = false;
+    if (this.editPassword) {
+      this.profileForm.get('password').enable();
+    } else {
+      this.profileForm.get('password').disable();
+    }
+  }
+
   /**
    * This function updates user profile
    * @returns void
    */
   updateProfile(): void {
     this.submitted = true;
-    console.log(this.profileForm.status);
+    // console.log(this.profileForm.value);
+    // console.log(this.profileForm.status);
     const profile = {
       name: this.profile.name.value,
       email: this.profile.email.value,

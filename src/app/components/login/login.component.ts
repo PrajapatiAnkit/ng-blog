@@ -18,15 +18,13 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authServive: AuthService,
     private router: Router
-  ) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
-  }
+  ) {}
 
   ngOnInit(): void {
     /**
      * Initialize login form
      */
+    this.authServive.removeToken();
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],

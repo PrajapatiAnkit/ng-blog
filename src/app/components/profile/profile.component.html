@@ -49,7 +49,7 @@
           </small>
         </div>
 
-        <div class="form-group" *ngIf="profileForm.value.passwordCheck">
+        <div class="form-group" *ngIf="editPassword">
           <label>Password</label>
           <input
             type="password"
@@ -57,11 +57,16 @@
             class="form-control"
             placeholder="Password"
           />
+          <small
+            class="text-danger"
+            *ngIf="submitted && profile.password.errors"
+            >Password is required
+          </small>
         </div>
         <div class="form-check">
           <input
             type="checkbox"
-            formControlName="passwordCheck"
+            (change)="onPassCheckChange($event)"
             class="form-check-input"
           />
           <label class="form-check-label">Change Password</label>

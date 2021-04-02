@@ -9,7 +9,7 @@ export class PostService {
   constructor(private http: HttpClient) {}
   /**
    * This function gets all the posts from server
-   * @returns json
+   * @returns Observable
    */
   getAllPosts(): Observable<any> {
     return this.http.get('/api/posts');
@@ -17,14 +17,14 @@ export class PostService {
   /**
    * This function creates or updates the post
    * @param post
-   * @returns json
+   * @returns Observable
    */
   savePost(post: any): Observable<any> {
     return this.http.post('/api/posts/save', post);
   }
   /**
    * This function gives the single post detail
-   * @returns json
+   * @returns Observable
    */
   getPostDetail(postId: string): Observable<any> {
     return this.http.get('/api/posts/detail/' + postId);
