@@ -1,0 +1,59 @@
+<form [formGroup]="editPostForm" (ngSubmit)="updatePost()">
+  <app-alert [alertMessage]="postUpdateSuccess"></app-alert>
+  <div class="form-group mt-4">
+    <label for="post_title">Post Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="post_title"
+      placeholder="Title"
+      formControlName="postTitle"
+    />
+    <small
+      *ngIf="
+        (submitted || postForm.postTitle.touched) && postForm.postTitle.errors
+      "
+      class="text-danger"
+      >Post title is required
+    </small>
+  </div>
+  <div class="form-group">
+    <label for="post_title">Post Tags</label>
+    <input
+      type="text"
+      class="form-control"
+      id="post_tags"
+      placeholder="Post Tags"
+      formControlName="postTags"
+    />
+    <small
+      *ngIf="
+        (submitted || postForm.postTags.touched) && postForm.postTags.errors
+      "
+      class="text-danger"
+      >Post Tags is required
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="post_content">Post Content</label>
+    <textarea
+      class="form-control"
+      id="post_content"
+      rows="3"
+      placeholder="Post Content"
+      formControlName="postContent"
+    ></textarea>
+    <small
+      *ngIf="
+        (submitted || postForm.postContent.touched) &&
+        postForm.postContent.errors
+      "
+      class="text-danger"
+      >Post Content is required
+    </small>
+  </div>
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary">Save Post</button>
+  </div>
+</form>

@@ -1,17 +1,17 @@
-<h4>Welcome User</h4>
+<h4>Welcome {{ userName }}</h4>
 <div class="row">
   <div class="col-sm-3">
     <app-counter-box
       [boxTitle]="'Total Posts'"
-      [boxCounter]="'0'"
+      [boxCounter]="totalPost"
       [actionMsg]="'View Posts'"
     ></app-counter-box>
   </div>
   <div class="col-sm-3">
     <app-counter-box
-      [boxTitle]="'Total Users'"
-      [boxCounter]="'0'"
-      [actionMsg]="'View Users'"
+      [boxTitle]="'My Post'"
+      [boxCounter]="myPostCount"
+      [actionMsg]="'My Posts'"
     ></app-counter-box>
   </div>
 </div>

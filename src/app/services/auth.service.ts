@@ -44,6 +44,14 @@ export class AuthService {
     );
   }
   /**
+   * This function registers new user
+   * @param userData
+   * @returns json
+   */
+  signUp(userData: Object): Observable<any> {
+    return this.http.post('/api/auth/register', userData);
+  }
+  /**
    * This property returns the user loggedin status
    */
   get isLoggedIn() {

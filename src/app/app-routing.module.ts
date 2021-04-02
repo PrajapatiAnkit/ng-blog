@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { ProductCreateComponent } from './components/product-create/product-create.component';
-import { ProductEditComponent } from './components/product-edit/product-edit.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -14,33 +9,16 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { CreatePostComponent } from './components/post/create-post/create-post.component';
 import { PostDetailComponent } from './components/post/post-detail/post-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditPostComponent } from './components/post/edit-post/edit-post.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'products',
-    component: ProductListComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'products/:id',
-    component: ProductDetailComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'create',
-    component: ProductCreateComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'edit/:id',
-    component: ProductEditComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -56,6 +34,11 @@ const routes: Routes = [
   {
     path: 'create-post',
     component: CreatePostComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit-post/:id',
+    component: EditPostComponent,
     canActivate: [AuthGuard],
   },
   {

@@ -11,6 +11,15 @@
           <i class="las la-arrow-left"></i>
         </a>
       </div>
+      <div class="card-actions float-right mr-3">
+        <a
+          [routerLink]="['/edit-post', postId]"
+          title="Edit"
+          class="btn btn-sm btn-success btn-circle"
+        >
+          <i class="las la-pen"></i>
+        </a>
+      </div>
       <h5 class="card-title mb-0">{{ post.title }}</h5>
     </div>
     <div class="card-body pt-0">
@@ -24,7 +33,10 @@
       >
         {{ tag }}
       </div>
-      <div>
+      <strong class="d-block text-gray-dark"
+        >Created by @{{ post.author }}</strong
+      >
+      <div class="mt-2">
         <img
           src="https://appstack.bootlab.io/img/photos/unsplash-1.jpg"
           class="img-responsive mr-2"

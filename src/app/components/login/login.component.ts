@@ -24,12 +24,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /**
+     * Initialize login form
+     */
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
-  login() {
+  /**
+   * This function performs user login
+   * @returns void
+   */
+  login(): void {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
@@ -44,7 +51,7 @@ export class LoginComponent implements OnInit {
         if (response.success) {
           this.loginFailed = false;
           localStorage.setItem('token', response.data.token);
-          this.router.navigate(['/posts']);
+          this.router.navigate(['/dashboard']);
         } else {
           this.loginFailed = true;
           this.loginFailedMessage = 'Login failed, please try again';
