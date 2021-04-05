@@ -5,36 +5,50 @@
     <input
       type="text"
       class="form-control"
-      id="post_title"
       placeholder="Title"
-      formControlName="postTitle"
+      formControlName="title"
     />
     <small
-      *ngIf="
-        (submitted || postForm.postTitle.touched) && postForm.postTitle.errors
-      "
+      *ngIf="(submitted || postForm.title.touched) && postForm.title.errors"
       class="text-danger"
       >Post title is required
     </small>
   </div>
   <div class="form-group">
-    <label for="post_title">Post Tags</label>
+    <label for="tags">Post Tags</label>
     <input
       type="text"
       class="form-control"
-      id="post_tags"
       placeholder="Post Tags"
-      formControlName="postTags"
+      formControlName="tags"
     />
     <small
-      *ngIf="
-        (submitted || postForm.postTags.touched) && postForm.postTags.errors
-      "
+      *ngIf="(submitted || postForm.tags.touched) && postForm.tags.errors"
       class="text-danger"
       >Post Tags is required
     </small>
   </div>
-
+  <div class="form-group">
+    <label for="post_title">Featured Image</label>
+    <div class="custom-file">
+      <input
+        type="file"
+        class="custom-file-input"
+        (change)="onFileChange($event)"
+        formControlName="fileSource"
+      />
+      <label class="custom-file-label" for="featuredImg">
+        {{ choosedFileName }}</label
+      >
+    </div>
+    <small
+      *ngIf="
+        (submitted || postForm.fileSource.touched) && postForm.fileSource.errors
+      "
+      class="text-danger"
+      >Featured Image is required
+    </small>
+  </div>
   <div class="form-group">
     <label for="post_content">Post Content</label>
     <textarea
@@ -42,13 +56,10 @@
       id="post_content"
       rows="3"
       placeholder="Post Content"
-      formControlName="postContent"
+      formControlName="content"
     ></textarea>
     <small
-      *ngIf="
-        (submitted || postForm.postContent.touched) &&
-        postForm.postContent.errors
-      "
+      *ngIf="(submitted || postForm.content.touched) && postForm.content.errors"
       class="text-danger"
       >Post Content is required
     </small>

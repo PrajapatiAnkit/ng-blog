@@ -38,7 +38,8 @@
       >
       <div class="mt-2">
         <img
-          src="https://appstack.bootlab.io/img/photos/unsplash-1.jpg"
+          *ngIf="thumbnailUrl"
+          [src]="thumbnailUrl"
           class="img-responsive mr-2"
           width="400"
         />

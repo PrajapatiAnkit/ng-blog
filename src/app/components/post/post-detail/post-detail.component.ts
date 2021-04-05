@@ -12,6 +12,7 @@ export class PostDetailComponent implements OnInit {
   post: any;
   postTags: [] = [];
   loading: boolean = true;
+  thumbnailUrl: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService
@@ -20,8 +21,14 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id');
     this.postService.getPostDetail(this.postId).subscribe((response) => {
-      this.post = response.data;
+      const responseData = response.data;
+      this.post = responseData.post;
       this.postTags = this.post.tags.split(',');
+      if (this.post.featured_image) {
+        this.thumbnailUrl =
+          responseData.thumbnail_path + this.post.featured_image;
+      }
+
       this.loading = false;
     });
   }

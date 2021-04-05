@@ -12,6 +12,7 @@ export class CreatePostComponent implements OnInit {
   createPostForm: FormGroup;
   submitted: boolean = false;
   postCreatedSuccess: string = '';
+  choosedFileName: string = 'Choose file';
   constructor(
     private formBuiler: FormBuilder,
     private postService: PostService,
@@ -23,35 +24,52 @@ export class CreatePostComponent implements OnInit {
      * Initialize post create form
      */
     this.createPostForm = this.formBuiler.group({
-      postTitle: ['', Validators.required],
-      postTags: ['', Validators.required],
-      postContent: ['', Validators.required],
+      title: ['', Validators.required],
+      tags: ['', Validators.required],
+      fileSource: ['', Validators.required],
+      feature_image: ['', Validators.required],
+      content: ['', Validators.required],
     });
+  }
+  onFileChange(event) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [feature_image] = event.target.files;
+      reader.readAsDataURL(feature_image);
+      reader.onload = () => {
+        this.createPostForm.patchValue({
+          feature_image: reader.result,
+        });
+        //console.log(reader.result);
+        this.choosedFileName = feature_image.name;
+      };
+    }
   }
   /**
    * Save the user post
    */
   submitPost() {
     this.submitted = true;
+    console.log(this.createPostForm.value);
+
     /**
      * If form is not valid, then stop here
      */
     if (!this.createPostForm.valid) {
       return;
     }
-    const postData = {
-      title: this.postForm.postTitle.value,
-      tags: this.postForm.postTags.value,
-      content: this.postForm.postContent.value,
-    };
-    this.postService.savePost(postData).subscribe((response) => {
-      if (response.success) {
-        this.postCreatedSuccess = 'Post has been saved successfully !';
-        setTimeout(() => {
-          this.router.navigate(['/posts']);
-        }, 1000);
-      }
-    });
+
+    this.postService
+      .savePost(this.createPostForm.value)
+      .subscribe((response) => {
+        if (response.success) {
+          this.postCreatedSuccess = response.message;
+          setTimeout(() => {
+            this.router.navigate(['/posts']);
+          }, 1000);
+        }
+      });
   }
   /**
    * This is a helper function to get form controls

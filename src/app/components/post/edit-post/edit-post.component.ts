@@ -13,6 +13,7 @@ export class EditPostComponent implements OnInit {
   submitted: boolean = false;
   postUpdateSuccess: string = '';
   postId: string;
+  choosedFileName: string = 'Choose file';
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
@@ -29,22 +30,43 @@ export class EditPostComponent implements OnInit {
     this.editPostForm = this.formBuilder.group({
       postTitle: ['', Validators.required],
       postTags: ['', Validators.required],
-      postContent: ['', Validators.required],
+      feature_image: ['', Validators.required],
+      postContent: ['', Validators.nullValidator],
     });
     this.loadPostDetail();
   }
+  onFileChange(event) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [feature_image] = event.target.files;
+      reader.readAsDataURL(feature_image);
+
+      reader.onload = () => {
+        this.editPostForm.patchValue({
+          feature_image: reader.result,
+        });
+        // console.log(reader.result);
+        this.choosedFileName = feature_image.name;
+      };
+    }
+  }
+
   updatePost(): void {
     this.submitted = true;
+    console.log(this.editPostForm.status);
+
     /**
      * If form is not valid, then stop here
      */
-    if (!this.editPostForm.valid) {
-      return;
-    }
+    // if (!this.editPostForm.valid) {
+    //   return;
+    // }
     const postUpdatedData = {
       title: this.postForm.postTitle.value,
       tags: this.postForm.postTags.value,
       content: this.postForm.postContent.value,
+      feature_image: this.postForm.feature_image.value,
       post_id: this.postId,
     };
     this.postService.savePost(postUpdatedData).subscribe((response) => {
@@ -68,7 +90,7 @@ export class EditPostComponent implements OnInit {
   loadPostDetail() {
     this.postService.getPostDetail(this.postId).subscribe(
       (response) => {
-        const post = response.data;
+        const post = response.data.post;
         this.editPostForm.patchValue({
           postTitle: post.title,
           postTags: post.tags,
