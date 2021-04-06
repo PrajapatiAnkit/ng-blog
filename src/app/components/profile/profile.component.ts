@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   profileUpdateMsg: string = '';
   editPassword: boolean = false;
+  choosedFileName: string = 'Choose file';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit {
       email: ['', Validators.required],
       contact: ['', Validators.required],
       password: ['', Validators.required],
+      profile_pic: ['', Validators.nullValidator],
     });
     this.profileForm.get('password').disable();
     this.getProfile();
@@ -53,24 +55,19 @@ export class ProfileComponent implements OnInit {
    */
   updateProfile(): void {
     this.submitted = true;
-    // console.log(this.profileForm.value);
-    // console.log(this.profileForm.status);
-    const profile = {
-      name: this.profile.name.value,
-      email: this.profile.email.value,
-      contact: this.profile.contact.value,
-      password: this.profile.password.value,
-    };
-    this.userService.updateProfile(profile).subscribe((response) => {
-      this.profileUpdateMsg = response.message;
-      let localData = JSON.parse(localStorage.getItem('currentUser'));
-      localData.user = response.data;
-      this.authService.setCurrentUser(localData);
-      this.authService.logggedInUserSubject.next(localData);
-      setTimeout(() => {
-        this.profileUpdateMsg = '';
-      }, 3000);
-    });
+    this.userService
+      .updateProfile(this.profileForm.value)
+      .subscribe((response) => {
+        this.profileUpdateMsg = response.message;
+        let localData = JSON.parse(localStorage.getItem('currentUser'));
+        localData.user = response.data;
+        this.authService.setCurrentUser(localData);
+        this.authService.logggedInUserSubject.next(localData);
+        setTimeout(() => {
+          this.profileUpdateMsg = '';
+          this.choosedFileName = 'Choose file';
+        }, 3000);
+      });
   }
   /**
    * Get user profile
@@ -84,5 +81,18 @@ export class ProfileComponent implements OnInit {
         contact: user.contact,
       });
     });
+  }
+  onFileChange(event) {
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [profile_pic] = event.target.files;
+      reader.readAsDataURL(profile_pic);
+      reader.onload = () => {
+        this.profileForm.patchValue({
+          profile_pic: reader.result,
+        });
+        this.choosedFileName = profile_pic.name;
+      };
+    }
   }
 }

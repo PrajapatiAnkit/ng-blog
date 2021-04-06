@@ -19,6 +19,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CounterBoxComponent } from './components/helper/counter-box/counter-box.component';
 import { EditPostComponent } from './components/post/edit-post/edit-post.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { DropdownDirective } from './directives/dropdown.directive';
+import { CommentsComponent } from './components/post/comments/comments.component';
+import { PostCommentComponent } from './components/post/comments/post-comment/post-comment.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,10 @@ import { SignupComponent } from './components/signup/signup.component';
     CounterBoxComponent,
     EditPostComponent,
     SignupComponent,
+    DropdownDirective,
+    CommentsComponent,
+    PostCommentComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,5 +45,12 @@
         />
       </div>
     </div>
+    <div class="m-4">
+      <app-post-comment [currentPostId]="postId"></app-post-comment>
+      <app-comments
+        [comments]="comments"
+        [currentPostId]="postId"
+      ></app-comments>
+    </div>
   </div>
 </ng-template>

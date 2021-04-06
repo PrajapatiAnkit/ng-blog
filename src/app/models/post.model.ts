@@ -15,3 +15,10 @@ export interface GetPostResponseModal {
   user_id: number;
   created_at: string;
 }
+
+export interface Comment {
+  id: number;
+  comment: string;
+  commented_by: string;
+  created_at: string;
+}

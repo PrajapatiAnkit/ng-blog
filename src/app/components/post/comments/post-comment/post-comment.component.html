@@ -1,0 +1,14 @@
+<form [formGroup]="commentForm" (ngSubmit)="commentOnPost()">
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea
+      class="form-control"
+      rows="3"
+      placeholder="Write something"
+      formControlName="comment"
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-success btn-sm float-right">
+    Add Comment
+  </button>
+</form>

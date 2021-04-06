@@ -36,8 +36,7 @@ export class AuthService {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.logggedInUserSubject.next(user);
         } else {
-          localStorage.removeItem('currentUser');
-          this.logggedInUserSubject.next(null);
+          this.removeToken();
         }
         return response;
       })
