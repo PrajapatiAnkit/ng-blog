@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidationHelper } from 'src/app/helper/validations.helper';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private validationHelper: ValidationHelper
   ) {}
 
   ngOnInit(): void {
@@ -55,9 +57,11 @@ export class ProfileComponent implements OnInit {
    */
   updateProfile(): void {
     this.submitted = true;
-    this.userService
-      .updateProfile(this.profileForm.value)
-      .subscribe((response) => {
+    if (!this.profileForm.valid) {
+      return;
+    }
+    this.userService.updateProfile(this.profileForm.value).subscribe(
+      (response) => {
         this.profileUpdateMsg = response.message;
         let localData = JSON.parse(localStorage.getItem('currentUser'));
         localData.user = response.data;
@@ -67,7 +71,14 @@ export class ProfileComponent implements OnInit {
           this.profileUpdateMsg = '';
           this.choosedFileName = 'Choose file';
         }, 3000);
-      });
+      },
+      (errorResponse) => {
+        this.validationHelper.showValidationErrors(
+          this.profileForm,
+          errorResponse
+        );
+      }
+    );
   }
   /**
    * Get user profile
@@ -87,11 +98,13 @@ export class ProfileComponent implements OnInit {
     if (event.target.files && event.target.files.length) {
       const [profile_pic] = event.target.files;
       reader.readAsDataURL(profile_pic);
+
       reader.onload = () => {
         this.profileForm.patchValue({
           profile_pic: reader.result,
         });
         this.choosedFileName = profile_pic.name;
+        console.log(reader.result);
       };
     }
   }

@@ -14,8 +14,14 @@
           />
           <small
             class="text-danger"
-            *ngIf="(submitted || profile.name.touched) && profile.name.errors"
+            *ngIf="
+              (submitted || profile.name.touched) &&
+              profile.name.errors?.required
+            "
             >Name is required
+          </small>
+          <small class="text-danger" *ngIf="profile.name.errors?.serverError"
+            >{{ profile.name.errors.serverError }}
           </small>
         </div>
         <div class="form-group">
@@ -28,8 +34,11 @@
           />
           <small
             class="text-danger"
-            *ngIf="(submitted || profile.email.touched) && profile.email.errors"
-            >Emailame is required
+            *ngIf="submitted && profile.email.errors?.required"
+            >Email is required
+          </small>
+          <small class="text-danger" *ngIf="profile.email.errors?.serverError"
+            >{{ profile.email.errors.serverError }}
           </small>
         </div>
         <div class="form-group">
@@ -43,9 +52,13 @@
           <small
             class="text-danger"
             *ngIf="
-              (submitted || profile.contact.touched) && profile.contact.errors
+              (submitted || profile.contact.touched) &&
+              profile.contact.errors?.required
             "
             >Contact is required
+          </small>
+          <small class="text-danger" *ngIf="profile.contact.errors?.serverError"
+            >{{ profile.contact.errors.serverError }}
           </small>
         </div>
         <div class="form-group">
@@ -60,6 +73,11 @@
               {{ choosedFileName }}</label
             >
           </div>
+          <small
+            class="text-danger"
+            *ngIf="profile.profile_pic.errors?.serverError"
+            >{{ profile.profile_pic.errors.serverError }}
+          </small>
         </div>
 
         <div class="form-group" *ngIf="editPassword">
@@ -74,6 +92,11 @@
             class="text-danger"
             *ngIf="submitted && profile.password.errors"
             >Password is required
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="profile.password.errors?.serverError"
+            >{{ profile.password.errors.serverError }}
           </small>
         </div>
         <div class="form-check">
