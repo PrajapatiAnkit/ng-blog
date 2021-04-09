@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comment } from 'src/app/models/post.model';
+import { CommentService } from 'src/app/services/comments/comment.service';
 
 @Component({
   selector: 'app-comments',
@@ -7,9 +8,28 @@ import { Comment } from 'src/app/models/post.model';
   styleUrls: ['./comments.component.css'],
 })
 export class CommentsComponent implements OnInit {
-  @Input() comments: Comment[];
-  @Input() currentPostId;
-  constructor() {}
+  @Input() postId;
+  comments: Comment[] = [];
+  constructor(private commentService: CommentService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadComments(this.postId);
+  }
+  /**
+   * This function loads the comments for a post
+   * @param postId
+   */
+  loadComments(postId: string) {
+    this.commentService.loadComments(postId).subscribe((response) => {
+      this.comments = response.data;
+    });
+  }
+  /**
+   * This is not a normal function this is custom event received by PostCommentComponent
+   * @param event
+   */
+  refreshComments(event) {
+    console.log('event received', event);
+    this.loadComments(this.postId);
+  }
 }

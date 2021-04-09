@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Comment } from 'src/app/models/post.model';
-import { CommentService } from 'src/app/services/comments/comment.service';
 import { PostService } from 'src/app/services/post/post.service';
 
 @Component({
@@ -13,20 +11,17 @@ export class PostDetailComponent implements OnInit {
   postId: string;
   post: any;
   postTags: [] = [];
-  comments: Comment[] = [];
   loading: boolean = true;
   thumbnailUrl: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService,
-    private commentService: CommentService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getPostDetail();
-    this.loadComments(this.postId);
   }
   /**
    * Load the post detail
@@ -43,19 +38,10 @@ export class PostDetailComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        if (error.status == 404) {
+        if (error.status === 404) {
           this.router.navigate(['/posts']);
         }
       }
     );
-  }
-  /**
-   * This function loads the comments for a post
-   * @param postId
-   */
-  loadComments(postId: String) {
-    this.commentService.loadComments(postId).subscribe((response) => {
-      this.comments = response.data;
-    });
   }
 }

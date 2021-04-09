@@ -1,5 +1,18 @@
+<app-post-comment
+  [postId]="postId"
+  (newCommentAdded)="refreshComments($event)"
+></app-post-comment>
 <ul class="list-group list-group-flush">
-  <li class="list-group-item" *ngFor="let comment of comments">
-    {{ comment.comment }}
-  </li>
+  <div
+    *ngIf="comments.length > 0; then commentsFound; else commentsNotFound"
+  ></div>
+
+  <ng-template #commentsFound>
+    <li class="list-group-item" *ngFor="let comment of comments">
+      {{ comment.comment }}
+    </li>
+  </ng-template>
+  <ng-template #commentsNotFound>
+    <li class="list-group-item">No comments available</li>
+  </ng-template>
 </ul>

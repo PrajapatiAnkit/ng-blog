@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  loggingIn: boolean = false;
   loginFailed: boolean;
   loginFailedMessage: string;
   constructor(
@@ -36,9 +36,12 @@ export class LoginComponent implements OnInit {
    */
   login(): void {
     this.submitted = true;
+
     if (this.loginForm.invalid) {
       return;
     }
+    this.loggingIn = true;
+    this.loginFailed = false;
     const credentials = {
       email: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value,
@@ -52,9 +55,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         } else {
           this.loginFailed = true;
-          this.loginFailedMessage = 'Login failed, please try again';
+          this.loginFailedMessage = response.message;
         }
+        this.loggingIn = false;
       });
+    this.submitted = false;
   }
   get frm() {
     return this.loginForm.controls;

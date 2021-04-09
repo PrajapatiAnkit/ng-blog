@@ -14,7 +14,7 @@ export class DropdownDirective {
   @HostBinding('class.show') isOpen = false;
   @HostListener('click') toggleOpen() {
     this.isOpen = !this.isOpen;
-    let part = this.element.nativeElement.querySelector('.dropdown-menu');
+    const part = this.element.nativeElement.querySelector('.dropdown-menu');
     if (this.isOpen) {
       this.render.addClass(part, 'show');
     } else {

@@ -19,6 +19,7 @@
       </div>
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <app-processing *ngIf="loggingIn"></app-processing>
         <div class="form-group">
           <label htmlFor="email">Email</label>
           <input

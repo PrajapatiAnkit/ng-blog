@@ -8,7 +8,11 @@
       formControlName="comment"
     ></textarea>
   </div>
-  <button type="submit" class="btn btn-success btn-sm float-right">
+  <button
+    type="submit"
+    class="btn btn-success btn-sm float-right"
+    [disabled]="loading"
+  >
     Add Comment
   </button>
 </form>

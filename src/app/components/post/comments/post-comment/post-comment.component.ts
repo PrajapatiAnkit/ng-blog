@@ -8,11 +8,14 @@ import { CommentService } from 'src/app/services/comments/comment.service';
   styleUrls: ['./post-comment.component.css'],
 })
 export class PostCommentComponent implements OnInit {
-  postId: String;
   submitted: boolean = false;
+  loading: boolean = false;
   commentForm: FormGroup;
-  @Input() currentPostId: String;
-  commentAdded: boolean = false;
+  @Input() postId: string;
+  /**
+   * Tell the comments component Hey, a new comment added by this comopnent
+   */
+  @Output() newCommentAdded = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,15 +34,20 @@ export class PostCommentComponent implements OnInit {
    */
   commentOnPost(): void {
     this.submitted = true;
+    this.loading = true;
     this.commentForm.patchValue({
-      post_id: this.currentPostId,
+      post_id: this.postId,
     });
     if (!this.commentForm.valid) {
       return;
     }
     this.commentService.commentOnPost(this.commentForm.value).subscribe(
       (response) => {
-        console.log(response);
+        if (response.success) {
+          this.commentForm.reset();
+          this.loading = false;
+          this.newCommentAdded.emit(true);
+        }
       },
       (errorResponse) => {
         console.log(errorResponse);
