@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ValidationHelper } from 'src/app/helper/validations.helper';
 import { PostService } from 'src/app/services/post/post.service';
 
 @Component({
@@ -13,10 +14,12 @@ export class CreatePostComponent implements OnInit {
   submitted: boolean = false;
   postCreatedSuccess: string = '';
   choosedFileName: string = 'Choose file';
+  loading: boolean = false;
   constructor(
     private formBuiler: FormBuilder,
     private postService: PostService,
-    private router: Router
+    private router: Router,
+    private validationHelper: ValidationHelper
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +29,7 @@ export class CreatePostComponent implements OnInit {
     this.createPostForm = this.formBuiler.group({
       title: ['', Validators.required],
       tags: ['', Validators.required],
-      fileSource: ['', Validators.required],
-      feature_image: ['', Validators.required],
+      feature_image: ['', Validators.nullValidator],
       content: ['', Validators.required],
     });
   }
@@ -51,6 +53,7 @@ export class CreatePostComponent implements OnInit {
    */
   submitPost() {
     this.submitted = true;
+    this.loading = true;
     console.log(this.createPostForm.value);
 
     /**
@@ -60,16 +63,24 @@ export class CreatePostComponent implements OnInit {
       return;
     }
 
-    this.postService
-      .savePost(this.createPostForm.value)
-      .subscribe((response) => {
+    this.postService.savePost(this.createPostForm.value).subscribe(
+      (response) => {
         if (response.success) {
           this.postCreatedSuccess = response.message;
+          this.loading = false;
           setTimeout(() => {
             this.router.navigate(['/posts']);
           }, 1000);
         }
-      });
+      },
+      (errorResponse) => {
+        this.loading = false;
+        this.validationHelper.showValidationErrors(
+          this.createPostForm,
+          errorResponse
+        );
+      }
+    );
   }
   /**
    * This is a helper function to get form controls

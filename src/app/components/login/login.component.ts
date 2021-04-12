@@ -46,9 +46,8 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value,
     };
-    this.authServive
-      .login(credentials.email, credentials.password)
-      .subscribe((response) => {
+    this.authServive.login(credentials.email, credentials.password).subscribe(
+      (response) => {
         if (response.success) {
           this.loginFailed = false;
           localStorage.setItem('token', response.data.token);
@@ -58,7 +57,13 @@ export class LoginComponent implements OnInit {
           this.loginFailedMessage = response.message;
         }
         this.loggingIn = false;
-      });
+      },
+      (error) => {
+        this.loggingIn = false;
+        this.loginFailed = true;
+        this.loginFailedMessage = 'Something went wrong...';
+      }
+    );
     this.submitted = false;
   }
   get frm() {

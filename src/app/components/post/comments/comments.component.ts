@@ -29,7 +29,7 @@ export class CommentsComponent implements OnInit {
    * @param event
    */
   refreshComments(event) {
-    console.log('event received', event);
+    console.log('refreshing comments...', event);
     this.loadComments(this.postId);
   }
 }

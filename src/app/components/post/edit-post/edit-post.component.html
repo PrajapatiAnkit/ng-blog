@@ -1,41 +1,51 @@
 <form [formGroup]="editPostForm" (ngSubmit)="updatePost()">
   <app-alert [alertMessage]="postUpdateSuccess"></app-alert>
   <div class="form-group mt-4">
-    <label for="post_title">Post Title</label>
+    <label for="post_title">Post Title <span class="required">*</span></label>
     <input
       type="text"
       class="form-control"
-      id="post_title"
       placeholder="Title"
-      formControlName="postTitle"
+      formControlName="title"
     />
     <small
       *ngIf="
-        (submitted || postForm.postTitle.touched) && postForm.postTitle.errors
+        (submitted || postForm.title.touched) && postForm.title.errors?.required
       "
       class="text-danger"
       >Post title is required
     </small>
+    <span
+      class="text-danger"
+      *ngIf="editPostForm.get('title').errors?.serverError"
+    >
+      {{ editPostForm.get("title").errors?.serverError }}
+    </span>
   </div>
   <div class="form-group">
-    <label for="post_title">Post Tags</label>
+    <label for="post_title">Post Tags <span class="required">*</span></label>
     <input
       type="text"
       class="form-control"
-      id="post_tags"
       placeholder="Post Tags"
-      formControlName="postTags"
+      formControlName="tags"
     />
     <small
       *ngIf="
-        (submitted || postForm.postTags.touched) && postForm.postTags.errors
+        (submitted || postForm.tags.touched) && postForm.tags.errors?.required
       "
       class="text-danger"
       >Post Tags is required
     </small>
+    <span
+      class="text-danger"
+      *ngIf="editPostForm.get('tags').errors?.serverError"
+    >
+      {{ editPostForm.get("tags").errors?.serverError }}
+    </span>
   </div>
   <div class="form-group">
-    <label for="post_title">Featured Image</label>
+    <label for="post_title">Featured Image (optional)</label>
     <div class="custom-file">
       <input
         type="file"
@@ -46,25 +56,38 @@
         {{ choosedFileName }}</label
       >
     </div>
+    <small
+      *ngIf="editPostForm.get('feature_image').errors?.serverError"
+      class="text-danger"
+      >{{ editPostForm.get("feature_image").errors?.serverError }}
+    </small>
   </div>
 
   <div class="form-group">
-    <label for="post_content">Post Content</label>
+    <label for="post_content"
+      >Post Content <span class="required">*</span></label
+    >
     <textarea
       class="form-control"
       id="post_content"
       rows="3"
       placeholder="Post Content"
-      formControlName="postContent"
+      formControlName="content"
     ></textarea>
     <small
       *ngIf="
-        (submitted || postForm.postContent.touched) &&
-        postForm.postContent.errors
+        (submitted || postForm.content.touched) &&
+        postForm.content.errors?.required
       "
       class="text-danger"
       >Post Content is required
     </small>
+    <span
+      class="text-danger"
+      *ngIf="editPostForm.get('content').errors?.serverError"
+    >
+      {{ editPostForm.get("content").errors?.serverError }}
+    </span>
   </div>
   <div class="float-right">
     <button type="submit" class="btn btn-primary">Save Post</button>

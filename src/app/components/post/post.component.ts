@@ -10,7 +10,20 @@ import { PostService } from 'src/app/services/post/post.service';
 export class PostComponent implements OnInit {
   posts: Post[] = [];
   loading: boolean = true;
-  constructor(private postService: PostService) {}
+  keyword: any;
+  favoritesPosts: [] = [];
+  totalItems: number;
+  pagination: any;
+  paginationLoader: boolean = false;
+
+  constructor(private postService: PostService) {
+    this.pagination = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalItems: this.totalItems,
+    };
+    console.log(this.pagination);
+  }
 
   ngOnInit(): void {
     this.getAllPosts();
@@ -19,9 +32,23 @@ export class PostComponent implements OnInit {
    * This function gets all from posts from server
    */
   getAllPosts() {
-    this.postService.getAllPosts().subscribe((response) => {
-      this.posts = response.data;
-      this.loading = false;
-    });
+    this.postService
+      .getAllPosts(this.pagination.currentPage)
+      .subscribe((response) => {
+        this.posts = response.data.posts.data;
+        this.favoritesPosts = response.data.favorites;
+        this.loading = false;
+        this.paginationLoader = false;
+        this.pagination.totalItems = response.data.posts.total;
+      });
+  }
+  /**
+   * Pages changed when navigate the pagination
+   * @param event
+   */
+  pageChanged(event) {
+    this.paginationLoader = true;
+    this.pagination.currentPage = event;
+    this.getAllPosts();
   }
 }

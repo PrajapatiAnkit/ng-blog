@@ -11,8 +11,8 @@ export class PostService {
    * This function gets all the posts from server
    * @returns Observable
    */
-  getAllPosts(): Observable<any> {
-    return this.http.get('/api/posts');
+  getAllPosts(currentPage: number): Observable<any> {
+    return this.http.get('/api/posts?page=' + currentPage);
   }
   /**
    * This function creates or updates the post
@@ -28,5 +28,8 @@ export class PostService {
    */
   getPostDetail(postId: string): Observable<any> {
     return this.http.get('/api/posts/detail/' + postId);
+  }
+  markFavoriteUnFavorite(status: number, post_id: number): Observable<any> {
+    return this.http.post('/api/favorites/mark', { status, post_id });
   }
 }

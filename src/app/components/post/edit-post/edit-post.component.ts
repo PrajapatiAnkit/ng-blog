@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ValidationHelper } from 'src/app/helper/validations.helper';
 import { PostService } from 'src/app/services/post/post.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class EditPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private postService: PostService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private validationHelper: ValidationHelper
   ) {}
 
   ngOnInit(): void {
@@ -28,16 +30,16 @@ export class EditPostComponent implements OnInit {
      * Initialize post update form
      */
     this.editPostForm = this.formBuilder.group({
-      postTitle: ['', Validators.required],
-      postTags: ['', Validators.required],
-      feature_image: ['', Validators.required],
-      postContent: ['', Validators.nullValidator],
+      title: ['', Validators.required],
+      tags: ['', Validators.required],
+      feature_image: ['', Validators.nullValidator],
+      content: ['', Validators.required],
+      post_id: [''],
     });
     this.loadPostDetail();
   }
   onFileChange(event) {
     let reader = new FileReader();
-
     if (event.target.files && event.target.files.length) {
       const [feature_image] = event.target.files;
       reader.readAsDataURL(feature_image);
@@ -55,28 +57,29 @@ export class EditPostComponent implements OnInit {
   updatePost(): void {
     this.submitted = true;
     console.log(this.editPostForm.status);
+    if (!this.editPostForm.valid) {
+      return;
+    }
 
-    /**
-     * If form is not valid, then stop here
-     */
-    // if (!this.editPostForm.valid) {
-    //   return;
-    // }
-    const postUpdatedData = {
-      title: this.postForm.postTitle.value,
-      tags: this.postForm.postTags.value,
-      content: this.postForm.postContent.value,
-      feature_image: this.postForm.feature_image.value,
+    this.editPostForm.patchValue({
       post_id: this.postId,
-    };
-    this.postService.savePost(postUpdatedData).subscribe((response) => {
-      if (response.success) {
-        this.postUpdateSuccess = response.message;
-        setTimeout(() => {
-          this.router.navigate(['/posts']);
-        }, 1000);
-      }
     });
+    this.postService.savePost(this.editPostForm.value).subscribe(
+      (response) => {
+        if (response.success) {
+          this.postUpdateSuccess = response.message;
+          setTimeout(() => {
+            this.router.navigate(['/posts']);
+          }, 1000);
+        }
+      },
+      (errorResponse) => {
+        this.validationHelper.showValidationErrors(
+          this.editPostForm,
+          errorResponse
+        );
+      }
+    );
   }
   /**
    * This is a helper function to get form controls
@@ -92,9 +95,9 @@ export class EditPostComponent implements OnInit {
       (response) => {
         const post = response.data.post;
         this.editPostForm.patchValue({
-          postTitle: post.title,
-          postTags: post.tags,
-          postContent: post.content,
+          title: post.title,
+          tags: post.tags,
+          content: post.content,
         });
       },
       (errorResponse) => {

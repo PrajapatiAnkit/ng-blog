@@ -33,6 +33,14 @@
       >
         {{ tag }}
       </div>
+      <div class="float-right">
+        <app-favorite
+          [postId]="post.id"
+          [status]="favoritesPosts.includes(post.id) ? 2 : 1"
+          [isFavorite]="favoritesPosts.includes(post.id)"
+          (favoriteChanged)="onFavoriteChanged($event)"
+        ></app-favorite>
+      </div>
       <strong class="d-block text-gray-dark"
         >Created by @{{ post.author }}</strong
       >

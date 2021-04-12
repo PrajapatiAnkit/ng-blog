@@ -1,0 +1,8 @@
+.fovorite {
+  color: #007bff;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: rgb(12, 196, 52) !important;
+  border-radius: 100%;
+}

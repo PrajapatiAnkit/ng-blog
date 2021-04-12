@@ -1,0 +1,6 @@
+<a
+  class="btn btn-default float-right"
+  (click)="markFavoriteUnFavorite(status, postId)"
+>
+  <i class="las la-heart size-2x" [ngClass]="status == 2 ? 'fovorite' : ''"></i
+></a>

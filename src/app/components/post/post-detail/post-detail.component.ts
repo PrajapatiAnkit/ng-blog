@@ -13,6 +13,7 @@ export class PostDetailComponent implements OnInit {
   postTags: [] = [];
   loading: boolean = true;
   thumbnailUrl: string;
+  favoritesPosts: [] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService,
@@ -36,6 +37,7 @@ export class PostDetailComponent implements OnInit {
           this.thumbnailUrl = this.post.featured_image;
         }
         this.loading = false;
+        this.favoritesPosts = responseData.favorites;
       },
       (error) => {
         if (error.status === 404) {

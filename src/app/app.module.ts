@@ -22,6 +22,9 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { CommentsComponent } from './components/post/comments/comments.component';
 import { PostCommentComponent } from './components/post/comments/post-comment/post-comment.component';
+import { PostSearchPipe } from './pipes/post-search.pipe';
+import { FavoriteComponent } from './components/helper/favorite/favorite.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { PostCommentComponent } from './components/post/comments/post-comment/po
     DropdownDirective,
     CommentsComponent,
     PostCommentComponent,
-    CommentsComponent,
+    PostSearchPipe,
+    FavoriteComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,7 @@ import { PostCommentComponent } from './components/post/comments/post-comment/po
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [
     {
