@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { LogoutComponent } from './components/auth/logout/logout.component';
 import { AuthGuard } from './guards/auth.guard';
-import { PostComponent } from './components/post/post.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PostComponent } from './components/user/post/post.component';
+import { DashboardComponent } from './components/user/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { CreatePostComponent } from './components/post/create-post/create-post.component';
-import { PostDetailComponent } from './components/post/post-detail/post-detail.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { EditPostComponent } from './components/post/edit-post/edit-post.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { CreatePostComponent } from './components/user/post/create-post/create-post.component';
+import { PostDetailComponent } from './components/user/post/post-detail/post-detail.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+import { EditPostComponent } from './components/user/post/edit-post/edit-post.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { FavoritePostsComponent } from './components/user/favorite-posts/favorite-posts.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'posts',
     component: PostComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'favorite-posts',
+    component: FavoritePostsComponent,
     canActivate: [AuthGuard],
   },
   {

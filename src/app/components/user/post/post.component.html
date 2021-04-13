@@ -1,0 +1,54 @@
+<app-processing *ngIf="loading; else post_list"></app-processing>
+<ng-template #post_list>
+  <div class="card">
+    <div class="card-header bg-white">
+      <div class="card-actions float-right mr-3">
+        <a
+          routerLink="/create-post"
+          title="Back"
+          class="btn btn-sm btn-primary btn-circle"
+        >
+          <i class="las la-plus"></i>
+        </a>
+      </div>
+      <h6 class="card-title border-gray pb-2 mb-0">Recent posts</h6>
+    </div>
+    <div class="card-body pt-0">
+      <div class="form-group mt-4">
+        <div class="input-group mb-2 mr-sm-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="las la-search"></i>
+            </div>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="search by title or author name"
+            [(ngModel)]="keyword"
+          />
+        </div>
+      </div>
+      <div class="mt-5">
+        <div
+          *ngFor="
+            let post of posts | postSearch: keyword | paginate: pagination
+          "
+        >
+          <app-post-item
+            [allowFavorite]="true"
+            [post]="post"
+            [favoritesPosts]="favoritesPosts"
+          ></app-post-item>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="paginationLoader">
+      <app-pagination-loader></app-pagination-loader>
+    </div>
+    <app-pagination
+      [currentPage]="pagination.currentPage"
+      (paginationChanged)="currentPageChanged($event)"
+    ></app-pagination>
+  </div>
+</ng-template>

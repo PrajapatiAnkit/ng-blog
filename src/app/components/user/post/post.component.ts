@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CURRENT_PAGE, ITEMS_PER_PAGE } from 'src/app/constants/app-constants';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post/post.service';
 
@@ -18,11 +19,10 @@ export class PostComponent implements OnInit {
 
   constructor(private postService: PostService) {
     this.pagination = {
-      currentPage: 1,
-      itemsPerPage: 10,
+      currentPage: CURRENT_PAGE,
+      itemsPerPage: ITEMS_PER_PAGE,
       totalItems: this.totalItems,
     };
-    console.log(this.pagination);
   }
 
   ngOnInit(): void {
@@ -40,13 +40,16 @@ export class PostComponent implements OnInit {
         this.loading = false;
         this.paginationLoader = false;
         this.pagination.totalItems = response.data.posts.total;
+        this.totalItems = response.data.posts.total;
       });
   }
   /**
+   * Custom event received from pagination component,
    * Pages changed when navigate the pagination
    * @param event
    */
-  pageChanged(event) {
+
+  currentPageChanged(event) {
     this.paginationLoader = true;
     this.pagination.currentPage = event;
     this.getAllPosts();

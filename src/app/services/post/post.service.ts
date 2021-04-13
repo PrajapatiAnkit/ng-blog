@@ -29,7 +29,20 @@ export class PostService {
   getPostDetail(postId: string): Observable<any> {
     return this.http.get('/api/posts/detail/' + postId);
   }
+  /**
+   * Marks favorite un favorite
+   * @param status
+   * @param post_id
+   * @returns Observable
+   */
   markFavoriteUnFavorite(status: number, post_id: number): Observable<any> {
     return this.http.post('/api/favorites/mark', { status, post_id });
+  }
+  /**
+   * This function gets current user favorite posts
+   * @returns favorites
+   */
+  getFavorites(): Observable<any> {
+    return this.http.get('/api/favorites/mine');
   }
 }
