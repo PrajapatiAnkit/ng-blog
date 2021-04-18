@@ -12,6 +12,6 @@ export class DashboardService {
    * @returns json
    */
   getDashboard(): Observable<any> {
-    return this.http.get('/api/dashboard');
+    return this.http.get('dashboard');
   }
 }

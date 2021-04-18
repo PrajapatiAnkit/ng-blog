@@ -13,7 +13,7 @@ export class CommentService {
    * @returns Observable
    */
   loadComments(postId): Observable<any> {
-    return this.http.get('/api/comments/' + postId);
+    return this.http.get('comments/' + postId);
   }
   /**
    * This function posts a new comment on a post
@@ -21,6 +21,6 @@ export class CommentService {
    * @returns Observable
    */
   commentOnPost(comment: Object): Observable<any> {
-    return this.http.post('/api/comments/add', comment);
+    return this.http.post('comments/add', comment);
   }
 }

@@ -12,7 +12,7 @@ export class PostService {
    * @returns Observable
    */
   getAllPosts(currentPage: number): Observable<any> {
-    return this.http.get('/api/posts?page=' + currentPage);
+    return this.http.get('posts?page=' + currentPage);
   }
   /**
    * This function creates or updates the post
@@ -20,14 +20,14 @@ export class PostService {
    * @returns Observable
    */
   savePost(post: any): Observable<any> {
-    return this.http.post('/api/posts/save', post);
+    return this.http.post('posts/save', post);
   }
   /**
    * This function gives the single post detail
    * @returns Observable
    */
   getPostDetail(postId: string): Observable<any> {
-    return this.http.get('/api/posts/detail/' + postId);
+    return this.http.get('posts/detail/' + postId);
   }
   /**
    * Marks favorite un favorite
@@ -36,13 +36,13 @@ export class PostService {
    * @returns Observable
    */
   markFavoriteUnFavorite(status: number, post_id: number): Observable<any> {
-    return this.http.post('/api/favorites/mark', { status, post_id });
+    return this.http.post('favorites/mark', { status, post_id });
   }
   /**
    * This function gets current user favorite posts
    * @returns favorites
    */
   getFavorites(): Observable<any> {
-    return this.http.get('/api/favorites/mine');
+    return this.http.get('favorites/mine');
   }
 }

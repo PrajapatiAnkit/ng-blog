@@ -29,7 +29,7 @@ export class AuthService {
    * @returns json
    */
   login(email: string, password: string): Observable<any> {
-    return this.http.post('/api/auth/login', { email, password }).pipe(
+    return this.http.post('auth/login', { email, password }).pipe(
       map((response: any) => {
         if (response.success) {
           const user = response.data;
@@ -48,7 +48,7 @@ export class AuthService {
    * @returns json
    */
   signUp(userData: Object): Observable<any> {
-    return this.http.post('/api/auth/register', userData);
+    return this.http.post('auth/register', userData);
   }
   /**
    * This property returns the user loggedin status
@@ -79,7 +79,7 @@ export class AuthService {
    * @returns json
    */
   logout(): Observable<any> {
-    return this.http.get('/api/auth/logout').pipe(
+    return this.http.get('auth/logout').pipe(
       map((response) => {
         localStorage.removeItem('token');
         localStorage.removeItem('currentUser');

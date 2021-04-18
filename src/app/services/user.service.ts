@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class UserService {
   constructor(private http: HttpClient) {}
   updateProfile(user: Object): Observable<any> {
-    return this.http.patch('/api/profile/update', user);
+    return this.http.patch('profile/update', user);
   }
   getProfile(): Observable<any> {
-    return this.http.get('/api/profile');
+    return this.http.get('profile');
   }
 }

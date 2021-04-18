@@ -29,6 +29,8 @@ import { FavoritePostsComponent } from './components/user/favorite-posts/favorit
 import { PaginationComponent } from './components/helper/pagination/pagination.component';
 import { PaginationLoaderComponent } from './components/helper/pagination/pagination-loader/pagination-loader.component';
 import { PostItemComponent } from './components/user/post/post-item/post-item.component';
+import { ApiInterceptor } from './interceptors/api.interceptor';
+import { NavigationToggleDirective } from './directives/navigation-toggle.directive';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { PostItemComponent } from './components/user/post/post-item/post-item.co
     EditPostComponent,
     SignupComponent,
     DropdownDirective,
+    NavigationToggleDirective,
     CommentsComponent,
     PostCommentComponent,
     PostSearchPipe,
@@ -69,6 +72,11 @@ import { PostItemComponent } from './components/user/post/post-item/post-item.co
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
       multi: true,
     },
   ],

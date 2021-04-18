@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  API_URL: 'http://localhost/projects/ng-blog-api/public/api',
 };
 
 /*
